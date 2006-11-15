@@ -42,6 +42,9 @@ jQuery.extend(
 				ar = jQuery.fn.arrays(newAr);
 				return ar;
 			}
+			ar.rand = function() {
+				return ar.dataAr[parseInt(Math.random()*ar.dataAr.length)];
+			}
 			/* Methods End */
 
 
