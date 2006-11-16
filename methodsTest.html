@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<link rel="stylesheet" href="../../jquery/build/test/data/testsuite.css" />
+<script type="text/javascript" src="../../jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../../jquery/build/test/data/testrunner.js"></script>
+<script type="text/javascript" src="string.js"></script>
+<script type="text/javascript" src="array.js"></script>
+<script type="text/javascript">
+$(function() { runTest(function() {
+
+test("String.trim()", function() {
+	ok( "" == "".trim(), "Expected no modification" );
+	ok( "" == " ".trim(), "Expected removal of single whitespace" );
+	ok( "" == "   ".trim(), "Expected removal of multiple whitespace" );
+	ok( "peter" == "peter".trim(), "Expected no modification" );
+	ok( "peter" == " peter".trim(), "Expected trim at start" );
+	ok( "peter" == "peter ".trim(), "Expected trim at end" );
+	ok( "peter" == " peter ".trim(), "Expected trim at start and end" );
+	ok( "peter" == "      peter           ".trim(), "Expected lots of trim at start and end" );
+	ok( "pet er" == "pet er".trim(), "Expected no modification" );
+	ok( "pet er" == " pet er".trim(), "Expected trim at start" );
+	ok( "pet er" == "pet er ".trim(), "Expected trim at end" );
+	ok( "pet er" == " pet er ".trim(), "Expected trim at start and end" );
+	ok( "pet er" == "      pet er           ".trim(), "Expected lots of trim at start and end" );
+	ok( "p  et er" == "p  et er".trim(), "Expected no modification" );
+	ok( "p  et er" == " p  et er".trim(), "Expected trim at start" );
+	ok( "p  et er" == "p  et er ".trim(), "Expected trim at end" );
+	ok( "p  et er" == " p  et er ".trim(), "Expected trim at start and end" );
+	ok( "p  et er" == "      p  et er           ".trim(), "Expected lots of trim at start and end" );
+	ok( "Hello Boys and Girls!" == " Hello Boys and Girls!   ".trim(), "Check example" );
+} );
+
+test("String.startsWith(prefix)", function() {
+	ok( "peter".startsWith("p") );
+	ok( "peter".startsWith("pet") );
+	ok( "peter".startsWith("pete") );
+	ok( "peter".startsWith("peter") );
+	ok( !"peter".startsWith("xst") );
+	ok( !"peter".startsWith("petr") );
+	ok( "/%$/".startsWith("/") );
+	ok( "/%$/".startsWith("/%") );
+	ok( !"/%$/".startsWith("/$") );
+	ok( "/%$/".startsWith("") );
+	ok( "".startsWith("") );
+});
+
+test("String.startsWith(prefix, offset)", function() {
+	ok( "peter".startsWith("e", 1) );
+	ok( "peter".startsWith("et", 1) );
+	ok( "peter".startsWith("ete", 1) );
+	ok( "peter".startsWith("eter", 1) );
+	ok( "peter".startsWith("t", 2) );
+	ok( "peter".startsWith("te", 2) );
+	ok( "peter".startsWith("ter", 2) );
+	ok( !"peter".startsWith("p", 1) );
+	ok( !"peter".startsWith("pe", 1) );
+	ok( !"peter".startsWith("e", 2) );
+	ok( !"peter".startsWith("et", 2) );
+	ok( !"peter".startsWith("pe", -1) );
+	ok( "peter".startsWith("r", 4) );
+	ok( !"peter".startsWith("r", 5) );
+	ok( "/%$/".startsWith("%", 1) );
+	ok( "/%$/".startsWith("%$", 1) );
+	ok( "/%$/".startsWith("$/", 2) );
+	ok( !"/%$/".startsWith("%$\"", 1) );
+	ok( "/%$/".startsWith("", 0) );
+	ok( "".startsWith("", 0) );
+});
+
+test("String.endsWith(suffix)", function() {
+	ok( "peter".endsWith("r") );
+	ok( "peter".endsWith("er") );
+	ok( "peter".endsWith("ter") );
+	ok( "peter".endsWith("eter") );
+	ok( "peter".endsWith("peter") );
+	ok( !"peter".endsWith("x") );
+	ok( !"peter".endsWith("xer") );
+	ok( !"peter".endsWith("pter") );
+	ok( "/%$/".endsWith("/") );
+	ok( "/%$/".endsWith("$/") );
+	ok( !"/%$/".endsWith("%/") );
+	ok( "/%$/".endsWith("") );
+	ok( "".endsWith("") );
+});
+
+test("String.truncate()", function() {
+	ok( "thisistenc thisistenc thisistenc ".truncate() == "thisistenc thisistenc thisi..." );
+	ok( "thisistenc thisistenc ".truncate() == "thisistenc thisistenc " );
+});
+
+test("String.truncate(length)", function() {
+	ok( "thisistenc ".truncate(5) == "th..." );
+	ok( "thisi".truncate() == "thisi" );
+});
+
+test("String.truncate(length, truncation)", function() {
+	ok( "thisistenc thisistenc thisistenc ".truncate(30, "x") == "thisistenc thisistenc thisistx" );
+	ok( "thisistenc thisistenc ".truncate(30, "x") == "thisistenc thisistenc " );
+	ok( "thisistenc ".truncate(5, "x") == "thisx" );
+	ok( "thisi".truncate(5, "x") == "thisi" );
+});
+
+test("String.stripTags()", function() {
+	ok( "<div id='hi'>Bla</div>".stripTags() == "Bla" );
+	var testString = [
+		'<html>',
+		'<head>',
+		'<link rel="stylesheet" href="../../jquery/build/test/data/testsuite.css" />',
+		'<script type="text/javascript" src="../../jquery/dist/jquery.js"><\/script>',
+		'<script type="text/javascript" src="../../jquery/build/test/data/testrunner.js"><\/script>',
+		'<script type="text/javascript" src="jquery.string.js"><\/script>',
+		'<script type="text/javascript" src="jquery.array.js"><\/script>',
+		'<script type="text/javascript">'
+	].join('');
+	ok( !testString.stripTags() );
+});
+
+test("Array.forEach()", function() {
+	var stuff = "";
+	["foo", "bar"].forEach(function(element, index, array) {
+		stuff += element;
+	});
+	ok( stuff == "foobar" );
+});
+
+test("Array.every()", function() {
+	 ok( [12, 54, 18, 130, 44].every(function(element, index, array) {
+	 	return element >= 10;
+	 }) === true );
+	 ok( [12, 5, 8, 130, 44].every(function(element, index, array) {
+	 	return element >= 10;
+	 }) === false );
+});
+
+test("Array.some()", function() {
+	ok( [12, 5, 8, 1, 44].some(function(element, index, array) {
+		return element >= 10;
+	}) === true );
+	ok( [2, 5, 8, 1, 4].some(function(element, index, array) {
+		return element >= 10;
+	}) === false );
+});
+
+test("Array.map()", function() {
+	var s = ["hello", "Array", "WORLD"];
+	var r = s.map(function(element, index, array) {
+		return element.toUpperCase();
+	});
+	isSet( s, ["hello", "Array", "WORLD"] );
+	isSet( r, ["HELLO", "ARRAY", "WORLD"] );
+	
+	s = [1, 4, 9];
+	r = s.map(Math.sqrt);
+	isSet( s, [1, 4, 9] );
+	isSet( r, [1, 2, 3] );
+});
+
+test("Array.filter()", function() {
+	var s = [12, 5, 8, 1, 44];
+	var r = s.filter(function(element, index, array) {
+		return element >= 10;
+	});
+	isSet( s, [12, 5, 8, 1, 44] );
+	isSet( r, [12, 44] );
+});
+
+test("Array.indexOf()", function() {
+	ok( [12, 5, 8, 5, 44].indexOf(5) == 1 );
+	ok( [12, 5, 8, 5, 44].indexOf(5, 2) == 3 );
+	ok( [12, 5, 8, 5, 44].indexOf(5, 4) == -1 );
+});
+
+test("Array.unique()", function() {
+	var s = [1, 2, 1, 4, 5, 4];
+	var r = s.unique();
+	isSet( s, [1, 2, 1, 4, 5, 4] );
+	isSet( r, [1, 2, 4, 5] );
+});
+
+}); });
+</script>
+</head>
+
+<body>
+<h1>jQuery - Methods Test Suite</h1>
+<div id="main"></div>
+<ol id="tests"></ol>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 /**
  * @author paul.bakaus
+ * @deprecated See array.js and string.js for prototype based implementations
  */
 jQuery.extend(
 	jQuery.fn,
