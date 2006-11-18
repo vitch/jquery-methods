@@ -7,8 +7,6 @@
 <script type="text/javascript" src="string.js"></script>
 <script type="text/javascript" src="array.js"></script>
 <script type="text/javascript">
-$(function() { runTest(function() {
-
 test("String.trim()", function() {
 	ok( "" == "".trim(), "Expected no modification" );
 	ok( "" == " ".trim(), "Expected removal of single whitespace" );
@@ -177,8 +175,6 @@ test("Array.unique()", function() {
 	isSet( s, [1, 2, 1, 4, 5, 4] );
 	isSet( r, [1, 2, 4, 5] );
 });
-
-}); });
 </script>
 </head>
 
