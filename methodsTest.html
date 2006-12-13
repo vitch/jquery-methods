@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="../../jquery/build/test/data/testsuite.css" />
 <script type="text/javascript" src="../../jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="../../jquery/build/test/data/testrunner.js"></script>
-<script type="text/javascript" src="string.js"></script>
-<script type="text/javascript" src="array.js"></script>
+<script type="text/javascript" src="jquery.string.js"></script>
+<script type="text/javascript" src="jquery.array.js"></script>
 <script type="text/javascript">
 test("String.trim()", function() {
 	ok( "" == "".trim(), "Expected no modification" );
@@ -147,7 +147,7 @@ test("Array.map()", function() {
 	});
 	isSet( s, ["hello", "Array", "WORLD"] );
 	isSet( r, ["HELLO", "ARRAY", "WORLD"] );
-	
+
 	s = [1, 4, 9];
 	r = s.map(Math.sqrt);
 	isSet( s, [1, 4, 9] );
