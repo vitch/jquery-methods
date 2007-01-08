@@ -14,6 +14,13 @@
  
 (function() {
 
+	/**
+	 * Adds a given method under the given name 
+	 * to the Date prototype if it doesn't
+	 * currently exist.
+	 *
+	 * @private
+	 */
 	function add(name, method) {
 		if( !String.prototype[name] ) {
 			String.prototype[name] = method;
@@ -28,7 +35,7 @@
 	 *
 	 * @name trim
 	 * @type String
-	 * @cat Javascript/String
+	 * @cat Plugins/Methods/String
 	 */
 	add("trim", function(){ 
 		return this.replace(/(^\s+|\s+$)/g, "");
@@ -49,7 +56,7 @@
 	 *
 	 * @name camelize
 	 * @type String
-	 * @cat Javascript/String
+	 * @cat Plugins/Methods/String
 	 */
 	add("camelize", function() {
 		return this.replace( /[-_]([a-z])/ig, function(z,b){ return b.toUpperCase();} );
@@ -80,7 +87,7 @@
 	 * @type Boolean
 	 * @param prefix The prefix to test
 	 * @param offset (optional) From where to start testing
-	 * @cat Javascript/String
+	 * @cat Plugins/Methods/String
 	 */
 	
 	add("startsWith", function(prefix, offset) {
@@ -101,7 +108,7 @@
 	 * @name endsWith
 	 * @type Boolean
 	 * @param suffix The suffix to test
-	 * @cat Javascript/String
+	 * @cat Plugins/Methods/String
 	 */
 	add("endsWith", function(suffix) {
 		return this.substring(this.length - suffix.length) == suffix;
@@ -120,7 +127,7 @@
 	 * @type String
 	 * @param Number length (optional) The maximum length of the returned string, default is 30
 	 * @param String suffix (optional) The suffix to append to the truncated string, default is "..."
-	 * @cat Javascript/String
+	 * @cat Plugins/Methods/String
 	 */
 	add("truncate", function(length, suffix) {
 		length = length || 30;
@@ -137,7 +144,7 @@
 	 *
 	 * @name stripTags
 	 * @type String
-	 * @cat Javascript/String
+	 * @cat Plugins/Methods/String
 	 */
 	add("stripTags", function() {
 		return this.replace(/<\/?[^>]+>/gi, '');

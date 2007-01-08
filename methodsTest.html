@@ -6,6 +6,7 @@
 <script type="text/javascript" src="../../jquery/build/test/data/testrunner.js"></script>
 <script type="text/javascript" src="jquery.string.js"></script>
 <script type="text/javascript" src="jquery.array.js"></script>
+<script type="text/javascript" src="jquery.date.js"></script>
 <script type="text/javascript">
 test("String.trim()", function() {
 	ok( "" == "".trim(), "Expected no modification" );
@@ -175,6 +176,230 @@ test("Array.unique()", function() {
 	isSet( s, [1, 2, 1, 4, 5, 4] );
 	isSet( r, [1, 2, 4, 5] );
 });
+
+test("Date.isLeapYear()", function() {
+	var dtm = new Date('01/01/2008');
+	ok( dtm.isLeapYear() == true, 'is a leap year' );
+	dtm = new Date('01/01/2007');
+	ok( dtm.isLeapYear() == false, 'is not a lear' );
+});
+
+test("Date.isWeekend()", function() {
+	var dtm = new Date('01/07/2007');
+	ok( dtm.isWeekend() == true, 'on a Sunday' );
+	dtm = new Date('01/08/2007');
+	ok( dtm.isWeekend() == false, 'on a Monday' );
+	dtm = new Date('01/09/2007');
+	ok( dtm.isWeekend() == false, 'on a Tuesday' );
+	dtm = new Date('01/10/2007');
+	ok( dtm.isWeekend() == false, 'on a Wednesday' );
+	dtm = new Date('01/11/2007');
+	ok( dtm.isWeekend() == false, 'on a Thursday' );
+	dtm = new Date('01/12/2007');
+	ok( dtm.isWeekend() == false, 'on a Friday' );
+	dtm = new Date('01/06/2007');
+	ok( dtm.isWeekend() == true, 'on a Saturday' );
+});
+
+test("Date.isWeekDay()", function() {
+	var dtm = new Date('01/07/2007');
+	ok( dtm.isWeekDay() == false, 'on a Sunday' );
+	dtm = new Date('01/08/2007');
+	ok( dtm.isWeekDay() == true, 'on a Monday' );
+	dtm = new Date('01/09/2007');
+	ok( dtm.isWeekDay() == true, 'on a Tuesday' );
+	dtm = new Date('01/10/2007');
+	ok( dtm.isWeekDay() == true, 'on a Wednesday' );
+	dtm = new Date('01/11/2007');
+	ok( dtm.isWeekDay() == true, 'on a Thursday' );
+	dtm = new Date('01/12/2007');
+	ok( dtm.isWeekDay() == true, 'on a Friday' );
+	dtm = new Date('01/06/2007');
+	ok( dtm.isWeekDay() == false, 'on a Saturday' );
+});
+
+test("Date.getDaysInMonth()", function() {
+	var dtm = new Date('01/01/2007');
+	ok( dtm.getDaysInMonth() == 31, 'in January');
+	dtm = new Date('02/01/2007');
+	ok( dtm.getDaysInMonth() == 28, 'in February');
+	dtm = new Date('02/01/2008');
+	ok( dtm.getDaysInMonth() == 29, 'in February on a leap year');
+	dtm = new Date('03/01/2007');
+	ok( dtm.getDaysInMonth() == 31, 'in March');
+	dtm = new Date('04/01/2007');
+	ok( dtm.getDaysInMonth() == 30, 'in April');
+	dtm = new Date('05/01/2007');
+	ok( dtm.getDaysInMonth() == 31, 'in May');
+	dtm = new Date('06/01/2007');
+	ok( dtm.getDaysInMonth() == 30, 'in June');
+	dtm = new Date('07/01/2007');
+	ok( dtm.getDaysInMonth() == 31, 'in July');
+	dtm = new Date('08/01/2007');
+	ok( dtm.getDaysInMonth() == 31, 'in August');
+	dtm = new Date('09/01/2007');
+	ok( dtm.getDaysInMonth() == 30, 'in September');
+	dtm = new Date('10/01/2007');
+	ok( dtm.getDaysInMonth() == 31, 'in October');
+	dtm = new Date('11/01/2007');
+	ok( dtm.getDaysInMonth() == 30, 'in November');
+	dtm = new Date('12/01/2007');
+	ok( dtm.getDaysInMonth() == 31, 'in December');
+});
+
+test("Date.getDayName()", function() {
+	var dtm = new Date('01/07/2007');
+	ok( dtm.getDayName() == 'Sunday', 'on a Sunday' );
+	dtm = new Date('01/08/2007');
+	ok( dtm.getDayName() == 'Monday', 'on a Monday' );
+	dtm = new Date('01/09/2007');
+	ok( dtm.getDayName() == 'Tuesday', 'on a Tuesday' );
+	dtm = new Date('01/10/2007');
+	ok( dtm.getDayName() == 'Wednesday', 'on a Wednesday' );
+	dtm = new Date('01/11/2007');
+	ok( dtm.getDayName() == 'Thursday', 'on a Thursday' );
+	dtm = new Date('01/12/2007');
+	ok( dtm.getDayName() == 'Friday', 'on a Friday' );
+	dtm = new Date('01/06/2007');
+	ok( dtm.getDayName() == 'Saturday', 'on a Saturday' );
+	
+	dtm = new Date('01/07/2007');
+	ok( dtm.getDayName(true) == 'Sun', 'on a Sunday abbreviated' );
+	dtm = new Date('01/08/2007');
+	ok( dtm.getDayName(true) == 'Mon', 'on a Monday abbreviated' );
+	dtm = new Date('01/09/2007');
+	ok( dtm.getDayName(true) == 'Tue', 'on a Tuesday abbreviated' );
+	dtm = new Date('01/10/2007');
+	ok( dtm.getDayName(true) == 'Wed', 'on a Wednesday abbreviated' );
+	dtm = new Date('01/11/2007');
+	ok( dtm.getDayName(true) == 'Thu', 'on a Thursday abbreviated' );
+	dtm = new Date('01/12/2007');
+	ok( dtm.getDayName(true) == 'Fri', 'on a Friday abbreviated' );
+	dtm = new Date('01/06/2007');
+	ok( dtm.getDayName(true) == 'Sat', 'on a Saturday abbreviated' );
+});
+
+test("Date.getMonthName()", function() {
+	var dtm = new Date('01/01/2007');
+	ok( dtm.getMonthName() == 'January', 'in January');
+	dtm = new Date('02/01/2007');
+	ok( dtm.getMonthName() == 'February', 'in February');
+	dtm = new Date('03/01/2007');
+	ok( dtm.getMonthName() == 'March', 'in March');
+	dtm = new Date('04/01/2007');
+	ok( dtm.getMonthName() == 'April', 'in April');
+	dtm = new Date('05/01/2007');
+	ok( dtm.getMonthName() == 'May', 'in May');
+	dtm = new Date('06/01/2007');
+	ok( dtm.getMonthName() == 'June', 'in June');
+	dtm = new Date('07/01/2007');
+	ok( dtm.getMonthName() == 'July', 'in July');
+	dtm = new Date('08/01/2007');
+	ok( dtm.getMonthName() == 'August', 'in August');
+	dtm = new Date('09/01/2007');
+	ok( dtm.getMonthName() == 'September', 'in September');
+	dtm = new Date('10/01/2007');
+	ok( dtm.getMonthName() == 'October', 'in October');
+	dtm = new Date('11/01/2007');
+	ok( dtm.getMonthName() == 'November', 'in November');
+	dtm = new Date('12/01/2007');
+	ok( dtm.getMonthName() == 'December', 'in December');
+	
+	dtm = new Date('01/01/2007');
+	ok( dtm.getMonthName(true) == 'Jan', 'in January');
+	dtm = new Date('02/01/2007');
+	ok( dtm.getMonthName(true) == 'Feb', 'in February');
+	dtm = new Date('03/01/2007');
+	ok( dtm.getMonthName(true) == 'Mar', 'in March');
+	dtm = new Date('04/01/2007');
+	ok( dtm.getMonthName(true) == 'Apr', 'in April');
+	dtm = new Date('05/01/2007');
+	ok( dtm.getMonthName(true) == 'May', 'in May');
+	dtm = new Date('06/01/2007');
+	ok( dtm.getMonthName(true) == 'Jun', 'in June');
+	dtm = new Date('07/01/2007');
+	ok( dtm.getMonthName(true) == 'Jul', 'in July');
+	dtm = new Date('08/01/2007');
+	ok( dtm.getMonthName(true) == 'Aug', 'in August');
+	dtm = new Date('09/01/2007');
+	ok( dtm.getMonthName(true) == 'Sep', 'in September');
+	dtm = new Date('10/01/2007');
+	ok( dtm.getMonthName(true) == 'Oct', 'in October');
+	dtm = new Date('11/01/2007');
+	ok( dtm.getMonthName(true) == 'Nov', 'in November');
+	dtm = new Date('12/01/2007');
+	ok( dtm.getMonthName(true) == 'Dec', 'in December');
+});
+
+test("Date.getDayOfYear()", function() {
+	var dtm = new Date('01/01/2007');
+	ok( dtm.getDayOfYear() == 0, 'First day of the year' );
+	dtm = new Date('12/31/2007');
+	ok( dtm.getDayOfYear() == 364, 'Last day of the year' );
+});
+
+test("Date.getWeekOfYear()", function() {
+	var dtm = new Date('01/01/2007');
+	ok( dtm.getWeekOfYear() == 0, 'First week of the year' );
+	dtm = new Date('12/31/2007');
+	ok( dtm.getWeekOfYear() == 52, 'Last week of the year' );
+});
+
+test("Date.setDayOfYear()", function() {
+	var dtm = new Date('01/01/2007');
+	ok( dtm.setDayOfYear(365).getDayOfYear() == 364, 'Last day of the year' );
+	dtm = new Date('12/31/2007');
+	ok( dtm.setDayOfYear(1).getDayOfYear() == 0, 'First day of the year' );
+});
+
+test("Date.addYears()", function() {
+	var dtm = new Date('01/01/2007');
+	dtm.addYears(1);
+	ok( dtm.getFullYear() == 2008, 'Add one year' );
+	dtm.addYears(-1);
+	ok( dtm.getFullYear() == 2007, 'Subtract one year' );
+});
+
+test("Date.addMonths()", function() {
+	var dtm = new Date('01/01/2007');
+	dtm.addMonths(1);
+	ok( dtm.getMonthName() == 'February', 'Add one month' );
+	dtm.addMonths(-1);
+	ok( dtm.getMonthName() == 'January', 'Subtract one month' );
+});
+
+test("Date.addDays()", function() {
+	var dtm = new Date('01/01/2007');
+	dtm.addDays(1);
+	ok( dtm.getDayName() == 'Tuesday', 'Add one day' );
+	dtm.addDays(-1);
+	ok( dtm.getDayName() == 'Monday', 'Subtract one day' );
+});
+
+test("Date.addHours()", function() {
+	var dtm = new Date('01/01/2007');
+	dtm.addHours(24);
+	ok( dtm.getDayName() == 'Tuesday', 'Add 24 hours' );
+	dtm.addHours(-24);
+	ok( dtm.getDayName() == 'Monday', 'Subtract 24 hours' );
+});
+
+test("Date.addMinutes()", function() {
+	var dtm = new Date('01/01/2007');
+	dtm.addMinutes(1440);
+	ok( dtm.getDayName() == 'Tuesday', 'Add 1440 minutes' );
+	dtm.addMinutes(-1440);
+	ok( dtm.getDayName() == 'Monday', 'Subtract 1440 minutes' );
+});
+
+test("Date.addSeconds()", function() {
+	var dtm = new Date('01/01/2007');
+	dtm.addSeconds(86400);
+	ok( dtm.getDayName() == 'Tuesday', 'Add 86400 seconds' );
+	dtm.addSeconds(-86400);
+	ok( dtm.getDayName() == 'Monday', 'Subtract 86400 seconds' );
+});
+
 </script>
 </head>
 

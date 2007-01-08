@@ -13,7 +13,14 @@
  */
 
 (function() {
-
+	
+	/**
+	 * Adds a given method under the given name 
+	 * to the Date prototype if it doesn't
+	 * currently exist.
+	 *
+	 * @private
+	 */
 	function add(name, method) {
 		if( !Array.prototype[name] ) {
 			Array.prototype[name] = method;
@@ -33,7 +40,7 @@
 	 * @param Object scope (optional) Object to use as 'this' when executing handler.
 	 * @name forEach
 	 * @type undefined
-	 * @cat Javascript/Array
+	 * @cat Plugins/Methods/Array
 	 */
 	add("forEach", function(handler, scope) {
 		scope = scope || window;
@@ -59,7 +66,7 @@
 	 * @param Object scope (optional) Object to use as 'this' when executing handler.
 	 * @name every
 	 * @type Boolean
-	 * @cat Javascript/Array
+	 * @cat Plugins/Methods/Array
 	 */
 	add("every", function(handler, scope) {
 		scope = scope || window;
@@ -87,7 +94,7 @@
 	 * @param Object scope (optional) Object to use as 'this' when executing handler.
 	 * @name some
 	 * @type Boolean
-	 * @cat Javascript/Array
+	 * @cat Plugins/Methods/Array
 	 */
 	add("some", function(handler, scope) {
 		scope = scope || window;
@@ -113,7 +120,7 @@
 	 * @param Object scope (optional) Object to use as 'this' when executing handler.
 	 * @name map
 	 * @type Array
-	 * @cat Javascript/Array
+	 * @cat Plugins/Methods/Array
 	 */
 	add("map", function(handler, scope) {
 		scope = scope || window;
@@ -136,7 +143,7 @@
 	 * @param Object scope (optional) Object to use as 'this' when executing handler.
 	 * @name filter
 	 * @type Array
-	 * @cat Javascript/Array
+	 * @cat Plugins/Methods/Array
 	 */
 	add("filter", function(handler, scope) {
 		scope = scope || window;
@@ -161,7 +168,7 @@
 	 * @param Number offset (optional) Index at which to start searching
 	 * @name filter
 	 * @type Array
-	 * @cat Javascript/Array
+	 * @cat Plugins/Methods/Array
 	 */
 	add("indexOf", function(subject, offset) {
 		for( var i = offset || 0; i < this.length; i++)
@@ -179,7 +186,7 @@
 	 *
 	 * @name unique
 	 * @type Array
-	 * @cat Javascript/Array
+	 * @cat Plugins/Methods/Array
 	 */
 	add("unique", function() {
 		return this.filter(function(element, index, array) {
