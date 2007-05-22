@@ -16,7 +16,7 @@
 	
 	/**
 	 * Adds a given method under the given name 
-	 * to the Date prototype if it doesn't
+	 * to the Array prototype if it doesn't
 	 * currently exist.
 	 *
 	 * @private
