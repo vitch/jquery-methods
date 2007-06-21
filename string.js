@@ -68,7 +68,7 @@
 	 * An optional offset specifies where to start searching,
 	 * default is 0 (start of the string).
 	 *
-	 * Returns false if the offset is negative or greater then the length
+	 * Returns false if the offset is negative or greater than the length
 	 * of this string.
 	 *
 	 * @example "goldvein".startsWith("go")
@@ -115,7 +115,7 @@
 	});
 	
 	/**
-	 * Returns a new String that is no longer then a certain length.
+	 * Returns a new String that is no longer than a certain length.
 	 *
 	 * @example "thisistenc ".truncate(5);
 	 * @result "th..."
