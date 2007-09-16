@@ -1,5 +1,5 @@
 // date localization for locale 'po'
-// provided by eRIZ
+// provided by eRIZ (http://eriz.pcinside.pl/)
 
 Date.dayNames = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
 Date.abbrDayNames = ['Ni', 'Po', 'Wt', 'Śr', 'Cz', 'Pt', 'So'];
