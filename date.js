@@ -8,6 +8,9 @@
  *
  * Copyright (c) 2006 Jörn Zaefferer and Brandon Aaron (brandon.aaron@gmail.com || http://brandonaaron.net)
  *
+ * Additional methods and properties added by Kelvin Luck: firstDayOfWeek, dateFormat, zeroTime, asString, fromString -
+ * I've added my name to these methods so you know who to blame if they are broken!
+ * 
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
@@ -61,6 +64,29 @@ Date.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July
  * @cat Plugins/Methods/Date
  */
 Date.abbrMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/**
+ * The first day of the week for this locale.
+ *
+ * @name firstDayOfWeek
+ * @type Number
+ * @cat Plugins/Methods/Date
+ * @author Kelvin Luck
+ */
+Date.firstDayOfWeek = 1;
+
+/**
+ * The format that string dates should be represented as (e.g. 'dd/mm/yyyy' for UK, 'mm/dd/yyyy' for US, 'yyyy-mm-dd' for Unicode etc).
+ *
+ * @name format
+ * @type String
+ * @cat Plugins/Methods/Date
+ * @author Kelvin Luck
+ */
+Date.format = 'dd/mm/yyyy';
+//Date.format = 'mm/dd/yyyy';
+//Date.format = 'yyyy-mm-dd';
+//Date.format = 'dd mmm yy';
 
 (function() {
 
@@ -334,5 +360,97 @@ Date.abbrMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', '
 		this.setSeconds(this.getSeconds() + num);
 		return this;
 	});
+	
+	/**
+	 * Sets the time component of this Date to zero for cleaner, easier comparison of dates where time is not relevant.
+	 * 
+	 * @example var dtm = new Date();
+	 * dtm.zeroTime();
+	 * dtm.toString();
+	 * @result 'Sat Jan 12 2008 00:01:00'
+	 * 
+	 * @name zeroTime
+	 * @type Date
+	 * @cat Plugins/Methods/Date
+	 * @author Kelvin Luck
+	 */
+	add("zeroTime", function() {
+		this.setMilliseconds(0);
+		this.setSeconds(0);
+		this.setMinutes(0);
+		this.setHours(0);
+		return this;
+	});
+	
+	/**
+	 * Returns a string representation of the date object according to Date.format.
+	 * (Date.toString may be used in other places so I purposefully didn't overwrite it)
+	 * 
+	 * @example var dtm = new Date("01/12/2008");
+	 * dtm.asString();
+	 * @result '12/01/2008' // (where Date.format == 'dd/mm/yyyy'
+	 * 
+	 * @name asString
+	 * @type Date
+	 * @cat Plugins/Methods/Date
+	 * @author Kelvin Luck
+	 */
+	add("asString", function() {
+		var r = Date.format;
+		return r
+			.split('yyyy').join(this.getFullYear())
+			.split('yy').join(this.getYear())
+			.split('mmm').join(this.getMonthName(true))
+			.split('mm').join(_zeroPad(this.getMonth()+1))
+			.split('dd').join(_zeroPad(this.getDate()));
+	});
+	
+	/**
+	 * Returns a new date object created from the passed String according to Date.format or false if the attempt to do this results in an invalid date object
+	 * (We can't simple use Date.parse as it's not aware of locale and I chose not to overwrite it incase it's functionality is being relied on elsewhere)
+	 *
+	 * @example var dtm = Date.fromString("12/01/2008");
+	 * dtm.toString();
+	 * @result 'Sat Jan 12 2008 00:00:00' // (where Date.format == 'dd/mm/yyyy'
+	 * 
+	 * @name fromString
+	 * @type Date
+	 * @cat Plugins/Methods/Date
+	 * @author Kelvin Luck
+	 */
+	Date.fromString = function(s)
+	{
+		var f = Date.format;
+		var d = new Date('01/01/1977');
+		var iY = f.indexOf('yyyy');
+		if (iY > -1) {
+			d.setFullYear(Number(s.substr(iY, 4)));
+		} else {
+			// TODO - this doesn't work very well - are there any rules for what is meant by a two digit year?
+			d.setYear(Number(s.substr(f.indexOf('yy'), 2)));
+		}
+		var iM = f.indexOf('mmm');
+		if (iM > -1) {
+			var mStr = s.substr(iM, 3);
+			for (var i=0; i<Date.abbrMonthNames.length; i++) {
+				if (Date.abbrMonthNames[i] == mStr) break;
+			}
+			d.setMonth(i);
+		} else {
+			d.setMonth(Number(s.substr(f.indexOf('mm'), 2)) - 1);
+		}
+		d.setDate(Number(s.substr(f.indexOf('dd'), 2)));
+		if (isNaN(d.getTime())) {
+			return false;
+		}
+		return d;
+	};
+	
+	// utility method
+	var _zeroPad = function(num) {
+		var s = '0'+num;
+		return s.substring(s.length-2)
+		//return ('0'+num).substring(-2); // doesn't work on IE :(
+	};
 	
 })();
