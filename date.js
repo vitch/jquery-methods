@@ -88,6 +88,17 @@ Date.format = 'dd/mm/yyyy';
 //Date.format = 'yyyy-mm-dd';
 //Date.format = 'dd mmm yy';
 
+/**
+ * The first two numbers in the century to be used when decoding a two digit year. Since a two digit year is ambiguous (and date.setYear
+ * only works with numbers < 99 and so doesn't allow you to set years after 2000) we need to use this to disambiguate the two digit year codes.
+ *
+ * @name format
+ * @type String
+ * @cat Plugins/Methods/Date
+ * @author Kelvin Luck
+ */
+Date.fullYearStart = '20';
+
 (function() {
 
 	/**
@@ -399,7 +410,7 @@ Date.format = 'dd/mm/yyyy';
 		var r = Date.format;
 		return r
 			.split('yyyy').join(this.getFullYear())
-			.split('yy').join(this.getYear())
+			.split('yy').join((this.getFullYear() + '').substring(2))
 			.split('mmm').join(this.getMonthName(true))
 			.split('mm').join(_zeroPad(this.getMonth()+1))
 			.split('dd').join(_zeroPad(this.getDate()));
@@ -427,7 +438,7 @@ Date.format = 'dd/mm/yyyy';
 			d.setFullYear(Number(s.substr(iY, 4)));
 		} else {
 			// TODO - this doesn't work very well - are there any rules for what is meant by a two digit year?
-			d.setYear(Number(s.substr(f.indexOf('yy'), 2)));
+			d.setFullYear(Number(Date.fullYearStart + s.substr(f.indexOf('yy'), 2)));
 		}
 		var iM = f.indexOf('mmm');
 		if (iM > -1) {
