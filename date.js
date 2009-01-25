@@ -406,11 +406,12 @@ Date.fullYearStart = '20';
 	 * @cat Plugins/Methods/Date
 	 * @author Kelvin Luck
 	 */
-	add("asString", function() {
-		var r = Date.format;
+	add("asString", function(format) {
+		var r = format || Date.format;
 		return r
 			.split('yyyy').join(this.getFullYear())
 			.split('yy').join((this.getFullYear() + '').substring(2))
+			.split('mmmm').join(this.getMonthName(false))
 			.split('mmm').join(this.getMonthName(true))
 			.split('mm').join(_zeroPad(this.getMonth()+1))
 			.split('dd').join(_zeroPad(this.getDate()));
