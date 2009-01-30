@@ -434,24 +434,54 @@ Date.fullYearStart = '20';
 	{
 		var f = Date.format;
 		var d = new Date('01/01/1977');
-		var iY = f.indexOf('yyyy');
-		if (iY > -1) {
-			d.setFullYear(Number(s.substr(iY, 4)));
-		} else {
-			// TODO - this doesn't work very well - are there any rules for what is meant by a two digit year?
-			d.setFullYear(Number(Date.fullYearStart + s.substr(f.indexOf('yy'), 2)));
-		}
-		var iM = f.indexOf('mmm');
+		
+		var mLength = 0;
+
+		var iM = f.indexOf('mmmm');
 		if (iM > -1) {
-			var mStr = s.substr(iM, 3);
-			for (var i=0; i<Date.abbrMonthNames.length; i++) {
-				if (Date.abbrMonthNames[i] == mStr) break;
+			for (var i=0; i<Date.monthNames.length; i++) {
+				var mStr = s.substr(iM, Date.monthNames[i].length);
+				if (Date.monthNames[i] == mStr) {
+					mLength = Date.monthNames[i].length - 4;
+					break;
+				}
 			}
 			d.setMonth(i);
 		} else {
-			d.setMonth(Number(s.substr(f.indexOf('mm'), 2)) - 1);
+			iM = f.indexOf('mmm');
+			if (iM > -1) {
+				var mStr = s.substr(iM, 3);
+				for (var i=0; i<Date.abbrMonthNames.length; i++) {
+					if (Date.abbrMonthNames[i] == mStr) break;
+				}
+				d.setMonth(i);
+			} else {
+				d.setMonth(Number(s.substr(f.indexOf('mm'), 2)) - 1);
+			}
 		}
-		d.setDate(Number(s.substr(f.indexOf('dd'), 2)));
+		
+		var iY = f.indexOf('yyyy');
+
+		if (iY > -1) {
+			if (iM < iY)
+			{
+				iY += mLength;
+			}
+			d.setFullYear(Number(s.substr(iY, 4)));
+		} else {
+			if (iM < iY)
+			{
+				iY += mLength;
+			}
+			// TODO - this doesn't work very well - are there any rules for what is meant by a two digit year?
+			d.setFullYear(Number(Date.fullYearStart + s.substr(f.indexOf('yy'), 2)));
+		}
+		var iD = f.indexOf('dd');
+		if (iM < iD)
+		{
+			iD += mLength;
+		}
+		d.setDate(Number(s.substr(iD, 2)));
 		if (isNaN(d.getTime())) {
 			return false;
 		}
