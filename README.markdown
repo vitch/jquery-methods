@@ -11,6 +11,6 @@ hosting and development.
 Authors
 -------
 
-[Joern Zaefferer](http://bassistance.de/)
-[Brandon Aaron](http://brandonaaron.net)
-[Kelvin Luck](http://www.kelvinluck.com)
+* [Joern Zaefferer](http://bassistance.de/)
+* [Brandon Aaron](http://brandonaaron.net)
+* [Kelvin Luck](http://www.kelvinluck.com)
