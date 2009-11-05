@@ -434,9 +434,9 @@ Date.fullYearStart = '20';
 	 * @cat Plugins/Methods/Date
 	 * @author Kelvin Luck
 	 */
-	Date.fromString = function(s)
+	Date.fromString = function(s, format)
 	{
-		var f = Date.format;
+		var f = format || Date.format;
 		var d = new Date('01/01/1977');
 		
 		var mLength = 0;
