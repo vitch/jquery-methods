@@ -415,7 +415,9 @@ Date.fullYearStart = '20';
 			.split('mmmm').join(this.getMonthName(false))
 			.split('mmm').join(this.getMonthName(true))
 			.split('mm').join(_zeroPad(this.getMonth()+1))
+			.split('m').join(this.getMonth()+1)
 			.split('dd').join(_zeroPad(this.getDate()))
+			.split('d').join(this.getDate())
 			.split('hh').join(_zeroPad(this.getHours()))
 			.split('min').join(_zeroPad(this.getMinutes()))
 			.split('ss').join(_zeroPad(this.getSeconds()));
