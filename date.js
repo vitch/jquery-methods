@@ -436,15 +436,16 @@ Date.fullYearStart = '20';
 	 */
 	Date.fromString = function(s, format)
 	{
-		var f = format || Date.format;
-		var d = new Date('01/01/1977');
-		
-		var mLength = 0;
+		var f = format || Date.format,
+		    d = new Date('01/01/1977'),
+		    mLength = 0,
+		    iM, iD, iY,
+		    i, mStr;
 
-		var iM = f.indexOf('mmmm');
+		iM = f.indexOf('mmmm');
 		if (iM > -1) {
-			for (var i=0; i<Date.monthNames.length; i++) {
-				var mStr = s.substr(iM, Date.monthNames[i].length);
+			for (i=0; i<Date.monthNames.length; i++) {
+				mStr = s.substr(iM, Date.monthNames[i].length);
 				if (Date.monthNames[i] == mStr) {
 					mLength = Date.monthNames[i].length - 4;
 					break;
@@ -454,8 +455,8 @@ Date.fullYearStart = '20';
 		} else {
 			iM = f.indexOf('mmm');
 			if (iM > -1) {
-				var mStr = s.substr(iM, 3);
-				for (var i=0; i<Date.abbrMonthNames.length; i++) {
+				mStr = s.substr(iM, 3);
+				for (i=0; i<Date.abbrMonthNames.length; i++) {
 					if (Date.abbrMonthNames[i] == mStr) break;
 				}
 				d.setMonth(i);
@@ -464,7 +465,7 @@ Date.fullYearStart = '20';
 			}
 		}
 		
-		var iY = f.indexOf('yyyy');
+		iY = f.indexOf('yyyy');
 
 		if (iY > -1) {
 			if (iM < iY)
@@ -480,7 +481,7 @@ Date.fullYearStart = '20';
 			// TODO - this doesn't work very well - are there any rules for what is meant by a two digit year?
 			d.setFullYear(Number(Date.fullYearStart + s.substr(f.indexOf('yy'), 2)));
 		}
-		var iD = f.indexOf('dd');
+		iD = f.indexOf('dd');
 		if (iM < iD)
 		{
 			iD += mLength;
