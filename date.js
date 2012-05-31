@@ -410,14 +410,14 @@ Date.fullYearStart = '20';
 	add("asString", function(format) {
 		var r = format || Date.format;
 		return r
+			.split('D').join(this.getDayName(true))
+			.split('d').join(this.getDate())
 			.split('yyyy').join(this.getFullYear())
 			.split('yy').join((this.getFullYear() + '').substring(2))
 			.split('mmmm').join(this.getMonthName(false))
 			.split('mmm').join(this.getMonthName(true))
 			.split('mm').join(_zeroPad(this.getMonth()+1))
-			.split('D').join(this.getDayName(true))
 			.split('DD').join(this.getDayName(false))
-			.split('d').join(this.getDate())
 			.split('dd').join(_zeroPad(this.getDate()))
 			.split('hh').join(_zeroPad(this.getHours()))
 			.split('min').join(_zeroPad(this.getMinutes()))
