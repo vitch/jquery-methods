@@ -317,8 +317,15 @@ Date.fullYearStart = '20';
 	 * @cat Plugins/Methods/Date
 	 */
 	add("addDays", function(num) {
-		//this.setDate(this.getDate() + num);
-		this.setTime(this.getTime() + (num*86400000) );
+		var timezoneOffsetBefore = this.getTimezoneOffset(),
+			timezoneOffsetAfter;
+        this.setTime(this.getTime() + (num*86400000) );
+        timezoneOffsetAfter = this.getTimezoneOffset();
+
+        // If the timezone has changed between days then adjust the time to reflect this
+        if(timezoneOffsetAfter !== timezoneOffsetBefore){
+                this.setTime(this.getTime() + ((timezoneOffsetAfter-timezoneOffsetBefore) * 60 * 1000));
+        }
 		return this;
 	});
 	
